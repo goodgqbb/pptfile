@@ -62,7 +62,7 @@ def upload():
         if item not in stopwords:
             texts.append(item)
     text = str(texts)
-    bg_pic = imread('/app/wxcloudrun/R-C.jpg')
+    bg_pic = imread('/app/wxcloudrun/backimage.png')
     wordcloud = WordCloud(mask=bg_pic,background_color='white',font_path='/app/wxcloudrun/华文楷体.ttf',scale=1.5).generate(text)
 
     wordcloud.to_file('/app/wxcloudrun/filecontent.jpg')
