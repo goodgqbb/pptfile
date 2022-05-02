@@ -27,7 +27,7 @@ def getfile(fileid):
     #转json
     data = json.dumps(data, ensure_ascii=False).encode("utf-8")
     print(data)
-    response = requests.post("https://api.weixin.qq.com/tcb/batchdownloadfile?access_token=" + access_token,data,)
+    response = requests.post("https://api.weixin.qq.com/tcb/batchdownloadfile?access_token=" + access_token,data)
     print(response.json())
     download_url = response.json()['file_list'][0]['download_url']
     filename =download_url.split("/")[-1]
