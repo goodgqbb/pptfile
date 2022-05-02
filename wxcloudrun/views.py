@@ -42,7 +42,7 @@ def getfile(fileid):
 def upload():
     gbm = lgb.Booster(model_file='/app/wxcloudrun/model.txt')
     fileid = request.json.get('fileid')
-    path = duixiangcunchu(courseid)
+    path = getfile(fileid)
     data = pd.read_csv(path, encoding="utf-8")
     student_ID =  data['student_ID']
     data.drop(columns = ['student_ID'], inplace = True)
