@@ -42,7 +42,23 @@ def getfile(fileid):
 def upload():
     gbm = lgb.Booster(model_file='/app/wxcloudrun/model.txt')
     fileid = request.json.get('fileid')
-    a = duixiangcunchu(courseid)
-    b = {"re":a}
-    c = json.dumps(b)
+    path = duixiangcunchu(courseid)
+    data = pd.read_csv(path, encoding="utf-8")
+    y = data['passed']
+    student_ID =  data['student_ID']
+    data.drop(columns = ['passed', 'student_ID'], inplace = True)
+    data.fillna(-1, inplace = True)
+    y_pred = gbm.predict(data, num_iteration=gbm.best_iteration)
+    a = []
+    k = 0
+    for item in y_pred:
+        if item >= 0.5:
+            a.append(1)
+        else:
+            a.append(0)
+            k += 1
+    ob = {}
+    for i,j in zip(a,student_ID):
+        ob[j] = i
+    c = json.dumps(ob)
     return c
