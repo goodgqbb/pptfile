@@ -54,7 +54,7 @@ def upload():
         if item >= 0.5:
             a.append(1)
         else:
-            a.append(0)
+            a.append(item)
             k += 1
     ob = {}
     for i,j in zip(a,student_ID):
