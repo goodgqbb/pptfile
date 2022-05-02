@@ -44,9 +44,8 @@ def upload():
     fileid = request.json.get('fileid')
     path = duixiangcunchu(courseid)
     data = pd.read_csv(path, encoding="utf-8")
-    y = data['passed']
     student_ID =  data['student_ID']
-    data.drop(columns = ['passed', 'student_ID'], inplace = True)
+    data.drop(columns = ['student_ID'], inplace = True)
     data.fillna(-1, inplace = True)
     y_pred = gbm.predict(data, num_iteration=gbm.best_iteration)
     a = []
