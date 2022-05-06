@@ -49,6 +49,7 @@ def upload():
         for shape in slide.shapes: #遍历PPT中的每个形状
             if shape.has_text_frame: #判断该是否包含文本，保证有文本才提取
                 for paragraph in shape.text_frame.paragraphs: #按文本框中的段落提取
+                    data.append(paragraph.text) #提取一个段落的文本，就存到列表data中
     strr = "".join(data)
     ob = {
         "re":strr
