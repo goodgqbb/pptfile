@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import lightgbm as lgb
+from pptx import Presentation
 
 #获取文件
 def getfile(fileid):
@@ -40,24 +41,17 @@ def getfile(fileid):
 
 @app.route('/', methods=['POST'])
 def upload():
-    gbm = lgb.Booster(model_file='/app/wxcloudrun/model.txt')
     fileid = request.json.get('fileid')
     path = getfile(fileid)
-    data = pd.read_csv(path, encoding="utf-8")
-    student_ID =  data['student_ID']
-    data.drop(columns = ['student_ID'], inplace = True)
-    data.fillna(-1, inplace = True)
-    y_pred = gbm.predict(data, num_iteration=gbm.best_iteration)
-    a = []
-    k = 0
-    for item in y_pred:
-        if item >= 0.5:
-            a.append(1)
-        else:
-            a.append(item)
-            k += 1
-    ob = {}
-    for i,j in zip(a,student_ID):
-        ob[j] = i
+    data = []
+    prs = Presentation(path)
+    for slide in prs.slides: #遍历每页PPT
+        for shape in slide.shapes: #遍历PPT中的每个形状
+            if shape.has_text_frame: #判断该是否包含文本，保证有文本才提取
+                for paragraph in shape.text_frame.paragraphs: #按文本框中的段落提取
+    strr = "".join(data)
+    ob = {
+        "re":strr
+    }
     c = json.dumps(ob)
     return c
