@@ -17,7 +17,7 @@ def getfile(fileid):
     response = requests.get( 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxfb2997f507abf89e&secret=168726b557fb7221c96955cec59b3347',verify=False )
     access_token = response.json()['access_token']
     data ={
-        "env": "prod-0gayxkvve034fe60",
+        "env": "prod-4gkwg8pif507a296",
         "file_list": [
         {
           "fileid":fileid,
